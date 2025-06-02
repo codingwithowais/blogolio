@@ -208,10 +208,10 @@ function Post() {
 
 
                 <div className="mt-10">
-  <h3 className="text-xl font-semibold mb-4">Comments</h3>
+ {userData && <h3 className="text-xl font-semibold mb-4">Comments</h3>}
 
   {/* Comment Input */}
-  {userData && <div className="flex items-start gap-3 mb-6">
+   {userData && <div className="flex items-start gap-3 mb-6">
     {/* <img 
       src={currentUser?.avatar || '/default-avatar.png'} 
       alt="User Avatar" 
