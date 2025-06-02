@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { login as storeLogin } from '../store/authSlice'
 import authService from '../appwrite/auth'
 import { EyeOff, Eye } from 'lucide-react'
+import {showMessage} from '../store/messageSlice'
 
 
 function Login() {
@@ -22,7 +23,10 @@ function Login() {
       if (session) {
         const userData = await authService.currUser();
         dispatch(storeLogin(userData));
+        dispatch(showMessage({type: "success" , text: "Signed in successfully"}));
         navigate('/');
+      }else{
+        dispatch(showMessage({type: "error" , text: "Failed to sign in! Please check your credentials"}));
       }
     } catch (error) {
       setError(error.message);

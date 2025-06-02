@@ -8,8 +8,11 @@ import Button from '../Button'
 import Select from '../Select'
 import RTE from '../RTE'
 import parse from 'html-react-parser'
+import { useDispatch } from 'react-redux'
+import {showMessage} from '../../store/messageSlice'
 
 function PostForm({ post }) {
+  const dispatch = useDispatch();
   const { register, handleSubmit, watch, setValue, getValues, control } = useForm({
     defaultValues: {
       title: post?.title || "",
@@ -45,7 +48,8 @@ function PostForm({ post }) {
 
       const dbPost = await dbServices.updatePost(post.$id, { ...data, likes: post.likes, Bookmarks: post.Bookmarks, featuredImage: file ? file.$id : post.featuredImage, username: post.username });
       if (dbPost) {
-        navigate(`/post/${dbPost.$id}`)
+        navigate(`/post/${dbPost.$id}`);
+        dispatch(showMessage({type: "success" , text: "Post edited successfully"}));
       }
 
     }
@@ -57,6 +61,7 @@ function PostForm({ post }) {
       const dbPost = await dbServices.addPost({ ...data, userId: userData.$id, username: userData.name });
       if (dbPost) {
         navigate(`/post/${dbPost.$id}`);
+        dispatch(showMessage({type: "success" , text: "New post added successfully"}));
       }
     }
 

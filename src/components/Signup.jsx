@@ -6,8 +6,9 @@ import Button from './Button'
 import authService from '../appwrite/auth'
 import { login } from '../store/authSlice'
 import { useDispatch } from 'react-redux'
-import { get, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { Eye, EyeOff } from 'lucide-react'
+import {showMessage} from '../store/messageSlice'
 
 function Signup() {
   const [error, setError] = useState("");
@@ -34,7 +35,10 @@ function Signup() {
         const userData = await authService.currUser();
         if (userData) {
           dispatch(login(userData));
+          dispatch(showMessage({type: "success" , text: "New account created successfully"}));
           navigate('/');
+        }else{
+          dispatch(showMessage({type: "error" , text: "Oops! Some error creating new account"}));
         }
       }
     } catch (error) {
