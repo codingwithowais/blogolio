@@ -37,9 +37,9 @@ function Signup() {
           dispatch(login(userData));
           dispatch(showMessage({type: "success" , text: "New account created successfully"}));
           navigate('/');
-        }else{
-          dispatch(showMessage({type: "error" , text: "Oops! Some error creating new account"}));
         }
+      }else{
+          dispatch(showMessage({type: "error" , text: "Oops! Some error occured creating new account"}));
       }
     } catch (error) {
       setError(error.message);
