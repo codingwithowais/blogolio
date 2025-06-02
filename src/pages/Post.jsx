@@ -8,11 +8,13 @@ import parse from 'html-react-parser'
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import {formatDistanceToNow} from 'date-fns'
 import commentServices from '../appwrite/comments'
+import { useDispatch } from 'react-redux'
+import {showMessage} from '../store/messageSlice'
 
 
 
 function Post() {
-
+    const dispatch = useDispatch();
     const [post, setPost] = useState(null);
     const [commentInput , setCommentInput] = useState("");
     const [isLiked, setIsLiked] = useState(false);
@@ -117,6 +119,7 @@ function Post() {
             if (res) {
                 dbServices.deleteImage(post.featuredImage).then(response => {
                     if (response) {
+                        dispatch(showMessage({type:"success" , text: "Post deleted successfully"}))
                         navigate('/');
                     }
                 })
